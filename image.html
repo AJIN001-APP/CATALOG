@@ -1,21 +1,494 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="https://telegra.ph/file/4cf337052c09eec06f3e8.jpg" type="image/x-icon">
-    <title>𝐍𝐈𝐑𝐎𝐒𝐇𝐀𝐍 𝐌𝐃</title>
-    <link rel="stylesheet" href="image.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="https://telegra.ph/file/4cf337052c09eec06f3e8.jpg" type="image/x-icon">
+  <title>𝐍𝐈𝐑𝐎𝐒𝐇𝐀𝐍 𝐈𝐌𝐀𝐆𝐄 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+      background: #000;
+    }
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: linear-gradient(45deg, #0f0f1a, #1a1a2e, #16213e, #0f3460);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    /* Particle Animation */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-1000px) rotate(720deg);
+      }
+    }
+    /* Header Styles */
+    header {
+      text-align: center;
+      padding: 30px 0;
+      width: 100%;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #fff, 0 0 20px #23d5ab, 0 0 40px #23a6d5;
+      animation: textGlow 2s ease-in-out infinite alternate, textPulse 2s infinite alternate;
+    }
+    @keyframes textGlow {
+      0% {
+        text-shadow: 0 0 10px #fff, 0 0 20px #23d5ab, 0 0 40px #23a6d5;
+      }
+      100% {
+        text-shadow: 0 0 15px #fff, 0 0 30px #23d5ab, 0 0 60px #23a6d5;
+      }
+    }
+    @keyframes textPulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    /* Main Content */
+    .content-wrapper {
+      width: 100%;
+      max-width: 1400px;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    /* Tab Navigation */
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      padding: 12px 25px;
+      background: rgba(35, 166, 213, 0.2);
+      color: white;
+      border: 2px solid #23a6d5;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(5px);
+    }
+    .tab-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.5s ease;
+    }
+    .tab-btn:hover {
+      background: rgba(35, 166, 213, 0.4);
+      box-shadow: 0 0 15px rgba(35, 166, 213, 0.6);
+    }
+    .tab-btn:hover::before {
+      left: 100%;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #23a6d5, #23d5ab);
+      box-shadow: 0 0 20px rgba(35, 166, 213, 0.8);
+    }
+    /* Tab Content */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.8s ease;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .tab-content.active {
+      display: block;
+    }
+    /* Image Grid */
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 50px;
+      padding: 10px;
+    }
+    /* Image Card */
+    .image-card {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transform: translateZ(0);
+      aspect-ratio: 9/16;
+    }
+    .pc-wallpapers .image-card {
+      aspect-ratio: 16/9;
+    }
+    .image-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(35, 166, 213, 0.3), rgba(35, 213, 171, 0.1));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+    .image-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+    .image-card:hover::before {
+      opacity: 1;
+    }
+    .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .image-card:hover img {
+      transform: scale(1.1);
+    }
+    /* Download Button */
+    .download-btn {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #23a6d5, #23d5ab);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 5px 15px rgba(35, 166, 213, 0.4);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 80%;
+      max-width: 180px;
+      justify-content: center;
+    }
+    .image-card:hover .download-btn {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .download-btn:hover {
+      background: linear-gradient(135deg, #23d5ab, #23a6d5);
+      transform: translateX(-50%) translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(35, 166, 213, 0.6);
+    }
+    /* Footer */
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .image-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+      }
+      .tab-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      .image-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+      }
+      .tab-btn {
+        padding: 8px 15px;
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Background Animation -->
+  <div class="bg-animation"></div>
+  <div class="particles" id="particles"></div>
+  <!-- Header -->
+  <header>
     <h1>𝐍𝐈𝐑𝐎𝐒𝐇𝐀𝐍 𝐈𝐌𝐀𝐆𝐄</h1>
-    <h1>𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑 𝐖𝐄𝐁</h1>
-    <br><br>
-    <div class="gallery"></div>
-    <script src="image.js"></script>
-  <br><br><br><br>
-  <p><b>𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 : 94714184446 | 94716682532 </b></p>
-  <br><br><br><br>
-    <footer><b>© 𝐍𝐈𝐑𝐎𝐒𝐇𝐀𝐍 𝐈𝐌𝐆 𝐖𝐄𝐁</b></footer>
+    <h1> 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑 𝐖𝐄𝐁</h1>
+  </header>
+  <!-- Main Content -->
+  <div class="content-wrapper">
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="mobile">📱 Mobile Wallpapers</button>
+      <button class="tab-btn" data-tab="pc">💻 PC 4K Wallpapers</button>
+    </div>
+    <!-- Tab Contents -->
+    <div class="tab-content active" id="mobile-tab">
+      <div class="image-grid mobile-wallpapers" id="mobileImages"></div>
+    </div>
+    <div class="tab-content" id="pc-tab">
+      <div class="image-grid pc-wallpapers" id="pcImages"></div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer>
+    <p><b>𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 : 94714184446 | 94716682532</b></p>
+    <p><b>© 𝐍𝐈𝐑𝐎𝐒𝐇𝐀𝐍 𝐈𝐌𝐆 𝐖𝐄𝐁</b></p>
+  </footer>
+  <script>
+    // Mobile wallpapers (9:16 aspect ratio)
+    const mobileImages = [
+      "https://i.ibb.co/MyQhy7JT/5818956.jpg",
+      "https://i.ibb.co/4wjyg5Zx/5818904.jpg",
+      "https://i.ibb.co/mjxzJ04/5825161.jpg",
+      "https://i.ibb.co/4gp1NYNG/5825003.jpg",
+      "https://i.ibb.co/Txztqzwh/5825030.jpg",
+      "https://i.ibb.co/HTdZBQnq/5824941.jpg",
+      "https://i.ibb.co/h1RF3FBT/5825388.jpg",
+      "https://i.ibb.co/rfRkQnwQ/5825216.jpg",
+      "https://i.ibb.co/DfnFp9b9/5825155.jpg",
+      "https://i.ibb.co/6R7tGqxZ/5824951.jpg",
+      "https://i.ibb.co/ymSbMSPk/5825251.jpg",
+      "https://i.ibb.co/r2Kc1Kn9/5818890.jpg",
+      "https://i.ibb.co/jkzpTqVT/5823270.jpg",
+      "https://i.ibb.co/XfnxZx34/5823204.jpg",
+      "https://i.ibb.co/C5Pftsb6/5825160.jpg",
+      "https://i.ibb.co/ZpMQdf75/5825162.jpg",
+      "https://i.ibb.co/twzVTNrD/5824957.jpg",
+      "https://i.ibb.co/Q0sVjZc/5825110.jpg",
+      "https://i.ibb.co/Kc2nSVFS/5824896.jpg",
+      "https://i.ibb.co/cc1hg43P/5824844.jpg",
+      "https://i.ibb.co/8LSmFrVb/5825165.jpg",
+      "https://i.ibb.co/Fq0Rfmfg/5825212.jpg",
+      "https://i.ibb.co/5WqBFkWK/5824940.jpg",
+      "https://i.ibb.co/LzfTk4s8/5825090.jpg",
+      "https://i.ibb.co/MxDdsjTF/5824890.jpg",
+      "https://i.ibb.co/xSKrhM9v/5823250.jpg"
+    ];
+    // PC/4K wallpapers (16:9 aspect ratio)
+    const pcImages = [
+      'https://i.ibb.co/xSyCn2jX/5815535-3840x2160-desktop-hd-4k-wallpaper-image.jpg',
+      'https://i.ibb.co/mCzB4Lsn/5815690-3840x2160-desktop-hd-4k-background.jpg',
+      'https://i.ibb.co/sJH6W1V5/5815688-3840x2160-desktop-hd-4k-background-photo.jpg',
+      'https://i.ibb.co/nqX21YXd/5815657-3840x2160-desktop-hd-4k-background-image.jpg',
+      'https://i.ibb.co/v6mfNYff/5815616-3840x2160-desktop-hd-4k-wallpaper-photo.jpg',
+      'https://i.ibb.co/TB1hypxk/5815569-3840x2160-desktop-hd-4k-background-image.jpg',
+      'https://i.ibb.co/mFRmqjmk/5815568-3840x2160-desktop-hd-4k-wallpaper-photo.jpg',
+      'https://i.ibb.co/M5prTqkw/5815560-3840x2160-desktop-hd-4k-background-photo.jpg',
+      'https://i.ibb.co/kbNDmFM/5815660-3840x2160-desktop-hd-4k-background.jpg',
+      'https://i.ibb.co/CKn1nRXH/5274.jpg',
+      'https://i.ibb.co/7t336d43/2991.jpg',
+      'https://i.ibb.co/vCcS9vkJ/5687.jpg',
+      'https://i.ibb.co/pV3PXCj/9473.jpg',
+      'https://i.ibb.co/pBxTJfQH/4673.jpg',
+      'https://i.ibb.co/yc2xJh4f/3429.jpg',
+      'https://i.ibb.co/qLwrpr5v/472.jpg',
+      'https://i.ibb.co/VPq4sK5/1991.jpg',
+      'https://i.ibb.co/WWzndPpf/2344.jpg',
+      'https://i.ibb.co/hJBPmwD4/2311.jpg',
+      'https://i.ibb.co/1JRt3ywT/5005.jpg',
+      'https://i.ibb.co/76RgRzd/2401.jpg',
+      'https://i.ibb.co/chwg8Y6M/3997.jpg',
+      'https://i.ibb.co/HDFLqSjk/3801.jpg',
+      'https://i.ibb.co/KcbhP68V/5780.jpg'
+    ];
+    // Create particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        // Random properties
+        const size = Math.random() * 10 + 5;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100 + 100;
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 15 + 10;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        particlesContainer.appendChild(particle);
+      }
+    }
+    // Generate image cards
+    function generateImageCards() {
+      const mobileContainer = document.getElementById('mobileImages');
+      const pcContainer = document.getElementById('pcImages');
+      // Generate mobile wallpapers
+      mobileImages.forEach((imageUrl, index) => {
+        mobileContainer.appendChild(createImageCard(imageUrl, index, 'mobile'));
+      });
+      // Generate PC/4K wallpapers
+      pcImages.forEach((imageUrl, index) => {
+        pcContainer.appendChild(createImageCard(imageUrl, index, 'pc'));
+      });
+    }
+    function createImageCard(imageUrl, index, type) {
+      const imageCard = document.createElement('div');
+      imageCard.className = 'image-card';
+      const img = document.createElement('img');
+      img.src = imageUrl;
+      img.alt = `${type === 'mobile' ? 'Mobile' : 'PC'} Wallpaper ${index + 1}`;
+      img.loading = "lazy";
+      const button = document.createElement('button');
+      button.className = 'download-btn';
+      button.innerHTML = '<i class="fas fa-download"></i> Download';
+      button.setAttribute('data-image', imageUrl);
+      imageCard.appendChild(img);
+      imageCard.appendChild(button);
+      return imageCard;
+    }
+    // Tab switching
+    function setupTabs() {
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tabId = btn.getAttribute('data-tab');
+          // Update active tab button
+          tabBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          // Update active tab content
+          tabContents.forEach(content => content.classList.remove('active'));
+          document.getElementById(`${tabId}-tab`).classList.add('active');
+        });
+      });
+    }
+    // Download functionality
+    function setupDownloadButtons() {
+      document.addEventListener('click', async (e) => {
+        if (e.target.closest('.download-btn')) {
+          const button = e.target.closest('.download-btn');
+          const imageUrl = button.getAttribute('data-image');
+          try {
+            // Show loading state
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+            button.disabled = true;
+            const response = await fetch(imageUrl);
+            if (!response.ok) throw new Error('Network error');
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const fileName = `Niroshan_${imageUrl.includes('mobile') ? 'Mobile' : 'PC'}_${Date.now()}.jpg`;
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            // Cleanup
+            setTimeout(() => {
+              document.body.removeChild(a);
+              URL.revokeObjectURL(blobUrl);
+            }, 100);
+          } catch (error) {
+            console.error('Download failed:', error);
+            button.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Retry';
+            button.disabled = false;
+            window.open(imageUrl, '_blank');
+          } finally {
+            setTimeout(() => {
+              button.innerHTML = '<i class="fas fa-download"></i> Download';
+              button.disabled = false;
+            }, 2000);
+          }
+        }
+      });
+    }
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      generateImageCards();
+      setupTabs();
+      setupDownloadButtons();
+    });
+  </script>
 </body>
 </html>
