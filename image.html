@@ -253,6 +253,24 @@
       transform: translateX(-50%) translateY(-5px) scale(1.05);
       box-shadow: 0 8px 20px rgba(35, 166, 213, 0.6);
     }
+    /* Download Counter */
+    .download-count {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      z-index: 2;
+    }
+    .download-count i {
+      color: #23d5ab;
+    }
     /* Footer */
     footer {
       margin-top: 50px;
@@ -274,6 +292,10 @@
       .tab-btn {
         padding: 10px 20px;
         font-size: 14px;
+      }
+      .download-count {
+        font-size: 10px;
+        padding: 3px 8px;
       }
     }
     @media (max-width: 480px) {
@@ -318,7 +340,7 @@
   <!-- Footer -->
   <footer>
     <p><b>𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 : 94714184446 | 94716682532</b></p>
-    <p><b>© 𝐍𝐈𝐑𝐎𝐒𝐇𝐀𝐍 𝐈𝐌𝐆 𝐖𝐄𝐁</b></p>
+    <p><b>© 2025 𝐍𝐈𝐑𝐎𝐒𝐇𝐀𝐍 𝐈𝐌𝐆 𝐖𝐄𝐁</b></p>
   </footer>
   <script>
     // Mobile wallpapers (9:16 aspect ratio)
@@ -377,6 +399,40 @@
       'https://i.ibb.co/HDFLqSjk/3801.jpg',
       'https://i.ibb.co/KcbhP68V/5780.jpg'
     ];
+
+    // Download counters - initialized from localStorage or set to 0
+    let downloadCounts = JSON.parse(localStorage.getItem('wallpaperDownloadCounts')) || {};
+
+    // Initialize download counts for all images if they don't exist
+    function initializeDownloadCounts() {
+      [...mobileImages, ...pcImages].forEach(imageUrl => {
+        if (!downloadCounts[imageUrl]) {
+          downloadCounts[imageUrl] = 0;
+        }
+      });
+      saveDownloadCounts();
+    }
+
+    // Save download counts to localStorage
+    function saveDownloadCounts() {
+      localStorage.setItem('wallpaperDownloadCounts', JSON.stringify(downloadCounts));
+    }
+
+    // Increment download count for a specific image
+    function incrementDownloadCount(imageUrl) {
+      downloadCounts[imageUrl] = (downloadCounts[imageUrl] || 0) + 1;
+      saveDownloadCounts();
+      updateDownloadCounterUI(imageUrl);
+    }
+
+    // Update the download counter display for a specific image
+    function updateDownloadCounterUI(imageUrl) {
+      const counters = document.querySelectorAll(`.download-counter[data-image="${imageUrl}"]`);
+      counters.forEach(counter => {
+        counter.textContent = downloadCounts[imageUrl];
+      });
+    }
+
     // Create particles
     function createParticles() {
       const particlesContainer = document.getElementById('particles');
@@ -399,38 +455,56 @@
         particlesContainer.appendChild(particle);
       }
     }
+
     // Generate image cards
     function generateImageCards() {
       const mobileContainer = document.getElementById('mobileImages');
       const pcContainer = document.getElementById('pcImages');
+
       // Generate mobile wallpapers
       mobileImages.forEach((imageUrl, index) => {
         mobileContainer.appendChild(createImageCard(imageUrl, index, 'mobile'));
       });
+
       // Generate PC/4K wallpapers
       pcImages.forEach((imageUrl, index) => {
         pcContainer.appendChild(createImageCard(imageUrl, index, 'pc'));
       });
     }
+
     function createImageCard(imageUrl, index, type) {
       const imageCard = document.createElement('div');
       imageCard.className = 'image-card';
+
       const img = document.createElement('img');
       img.src = imageUrl;
       img.alt = `${type === 'mobile' ? 'Mobile' : 'PC'} Wallpaper ${index + 1}`;
       img.loading = "lazy";
+
+      // Create download counter
+      const counter = document.createElement('div');
+      counter.className = 'download-count';
+      counter.setAttribute('data-image', imageUrl);
+      counter.classList.add('download-counter');
+      counter.innerHTML = `<i class="fas fa-download"></i> <span>${downloadCounts[imageUrl] || 0}</span>`;
+
       const button = document.createElement('button');
       button.className = 'download-btn';
       button.innerHTML = '<i class="fas fa-download"></i> Download';
       button.setAttribute('data-image', imageUrl);
+
       imageCard.appendChild(img);
+      imageCard.appendChild(counter);
       imageCard.appendChild(button);
+
       return imageCard;
     }
+
     // Tab switching
     function setupTabs() {
       const tabBtns = document.querySelectorAll('.tab-btn');
       const tabContents = document.querySelectorAll('.tab-content');
+
       tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           const tabId = btn.getAttribute('data-tab');
@@ -443,6 +517,7 @@
         });
       });
     }
+
     // Download functionality
     function setupDownloadButtons() {
       document.addEventListener('click', async (e) => {
@@ -453,16 +528,23 @@
             // Show loading state
             button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
             button.disabled = true;
+
             const response = await fetch(imageUrl);
             if (!response.ok) throw new Error('Network error');
+
             const blob = await response.blob();
             const blobUrl = URL.createObjectURL(blob);
             const fileName = `Niroshan_${imageUrl.includes('mobile') ? 'Mobile' : 'PC'}_${Date.now()}.jpg`;
+
             const a = document.createElement('a');
             a.href = blobUrl;
             a.download = fileName;
             document.body.appendChild(a);
             a.click();
+
+            // Increment download count
+            incrementDownloadCount(imageUrl);
+
             // Cleanup
             setTimeout(() => {
               document.body.removeChild(a);
@@ -482,8 +564,10 @@
         }
       });
     }
+
     // Initialize everything
     document.addEventListener('DOMContentLoaded', () => {
+      initializeDownloadCounts();
       createParticles();
       generateImageCards();
       setupTabs();
